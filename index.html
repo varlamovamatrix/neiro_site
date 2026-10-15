@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер-класс: Свой сайт за 1 вечер с помощью нейросетей</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Manrope, Golos Text, Lora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#F4EEE6',
+                        peach: '#E8B39E',
+                        'peach-hover': '#DF9F86',
+                        sage: '#A7B4A0',
+                        eggplant: '#392E45',
+                        gold: '#BE985C',
+                        milk: '#FAF7F2',
+                        card: '#EFE7DC'
+                    },
+                    fontFamily: {
+                        heading: ['Manrope', 'sans-serif'],
+                        body: ['"Golos Text"', 'sans-serif'],
+                        serif: ['Lora', 'serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(57, 46, 69, 0.07)',
+                        'glow': '0 0 25px rgba(232, 179, 158, 0.45)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F4EEE6;
+            color: #392E45;
+            font-family: 'Golos Text', sans-serif;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4EEE6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #BE985C;
+            border-radius: 9999px;
+        }
+        .editorial-border {
+            border: 1px solid rgba(190, 152, 92, 0.25);
+        }
+    </style>
+</head>
+<body class="selection:bg-peach selection:text-eggplant antialiased">
+
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#F4EEE6]/85 border-b border-[#BE985C]/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Логотип -->
+            <a href="#" class="flex flex-col group">
+                <span class="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-eggplant group-hover:text-gold transition-colors">
+                    НЕЙРОСАЙТ <span class="text-gold font-normal">•</span> <span class="font-normal text-base sm:text-lg">Мастер-класс</span>
+                </span>
+                <span class="text-xs text-eggplant/70">Создание сайтов без программистов и конструкторов</span>
+            </a>
+
+            <!-- Десктоп-навигация -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about-value" class="hover:text-gold transition-colors">Для кого</a>
+                <a href="#what-you-can-build" class="hover:text-gold transition-colors">Какие сайты вы создадите</a>
+                <a href="#format" class="hover:text-gold transition-colors">Формат</a>
+                <a href="#curriculum" class="hover:text-gold transition-colors">Программа</a>
+                <a href="#pricing" class="hover:text-gold transition-colors">Стоимость</a>
+                <a href="#faq" class="hover:text-gold transition-colors">FAQ</a>
+            </nav>
+
+            <!-- CTA кнопка в шапке -->
+            <div class="hidden sm:block">
+                <a href="https://payform.ru/becNvy1/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-peach hover:bg-peach-hover text-eggplant font-semibold px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-glow transform hover:-translate-y-0.5">
+                    Принять участие за 1 990 ₽
+                </a>
+            </div>
+
+            <!-- Мобильная кнопка меню -->
+            <div class="md:hidden flex items-center">
+                <button id="mobileMenuBtn" class="text-eggplant p-2 focus:outline-none" aria-label="Меню">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Мобильное выпадающее меню -->
+        <div id="mobileMenu" class="hidden md:hidden bg-[#FAF7F2] border-b border-[#BE985C]/20 px-6 py-4 space-y-3">
+            <a href="#about-value" class="block text-eggplant font-medium py-1" onclick="toggleMobileMenu()">Для кого</a>
+            <a href="#what-you-can-build" class="block text-eggplant font-medium py-1" onclick="toggleMobileMenu()">Какие сайты вы создадите</a>
+            <a href="#format" class="block text-eggplant font-medium py-1" onclick="toggleMobileMenu()">Формат</a>
+            <a href="#curriculum" class="block text-eggplant font-medium py-1" onclick="toggleMobileMenu()">Программа</a>
+            <a href="#pricing" class="block text-eggplant font-medium py-1" onclick="toggleMobileMenu()">Стоимость</a>
+            <a href="#faq" class="block text-eggplant font-medium py-1" onclick="toggleMobileMenu()">FAQ</a>
+            <a href="https://payform.ru/becNvy1/" target="_blank" rel="noopener noreferrer" class="block text-center w-full mt-2 bg-peach text-eggplant font-semibold py-2.5 rounded-full shadow-sm">
+                Принять участие за 1 990 ₽
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+            <div class="absolute top-1/4 -left-32 w-96 h-96 bg-sage/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-10 -right-24 w-80 h-80 bg-peach/30 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Текстовая колонка Hero -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sage/20 border border-sage/40 text-eggplant text-xs sm:text-sm font-medium">
+                            <span class="text-gold">✦</span> Практический мастер-класс
+                        </div>
+
+                        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-eggplant leading-[1.15] tracking-tight">
+                            Свой авторский сайт <br>
+                            <span class="text-gold font-normal">за 1 вечер</span> с нейросетями
+                        </h1>
+
+                        <p class="font-serif italic text-xl sm:text-2xl text-eggplant/90 leading-snug">
+                            Без знания кода, без споров с фрилансерами и без ежемесячных платежей конструкторам
+                        </p>
+
+                        <p class="text-base sm:text-lg text-eggplant/80 font-normal max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            Пошаговая методика создания стильного сайта под любую задачу: персональная визитка, продажа услуг и консультаций, презентация товаров или показ портфолио работ. Всё, что вы видите на этой странице, собрано именно по этому методу.
+                        </p>
+
+                        <!-- Кнопка CTA + бейджи доверия -->
+                        <div class="pt-2 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+                            <a href="https://payform.ru/becNvy1/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center bg-peach hover:bg-peach-hover text-eggplant font-bold text-base px-8 py-4 rounded-full shadow-soft hover:shadow-glow transform hover:-translate-y-0.5 transition-all duration-300">
+                                Получить мастер-класс за 1 990 ₽ →
+                            </a>
+                            <a href="#format" class="w-full sm:w-auto inline-flex items-center justify-center border border-[#BE985C]/40 hover:bg-milk/60 text-eggplant font-semibold px-6 py-4 rounded-full transition-colors">
+                                Что внутри
+                            </a>
+                        </div>
+
+                        <div class="flex items-center justify-center lg:justify-start gap-4 text-xs text-eggplant/70 pt-1">
+                            <span class="flex items-center gap-1">✓ Мгновенный доступ</span>
+                            <span>•</span>
+                            <span class="flex items-center gap-1">✓ Доступ навсегда</span>
+                            <span>•</span>
+                            <span class="flex items-center gap-1">✓ 1 готовый мастер-промпт</span>
+                        </div>
+                    </div>
+
+                    <!-- Визуальный макет Hero -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="bg-milk p-6 sm:p-8 rounded-3xl editorial-border shadow-soft relative z-10 space-y-6">
+                                <div class="flex items-center justify-between border-b border-[#BE985C]/20 pb-4">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-3 h-3 rounded-full bg-peach"></div>
+                                        <div class="w-3 h-3 rounded-full bg-sage"></div>
+                                        <div class="w-3 h-3 rounded-full bg-gold"></div>
+                                    </div>
+                                    <span class="text-xs text-eggplant/60 font-mono">my-website.html</span>
+                                </div>
+
+                                <div class="space-y-4">
+                                    <div class="p-4 rounded-2xl bg-cream border border-[#BE985C]/20">
+                                        <div class="text-xs text-eggplant/60 font-mono mb-1">// Результат за 1 вечер</div>
+                                        <p class="font-heading text-lg font-bold text-eggplant">Готовый сайт под ключ своими руками</p>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="p-3 bg-cream/70 rounded-2xl border border-sage/30">
+                                            <div class="text-sm font-bold text-eggplant flex items-center gap-1.5">
+                                                <span class="w-2.5 h-2.5 rounded-full bg-sage"></span> Свобода
+                                            </div>
+                                            <div class="text-[11px] text-eggplant/70 mt-1">Не зависите от веб-разработчиков</div>
+                                        </div>
+                                        <div class="p-3 bg-cream/70 rounded-2xl border border-peach/40">
+                                            <div class="text-sm font-bold text-eggplant flex items-center gap-1.5">
+                                                <span class="w-2.5 h-2.5 rounded-full bg-peach"></span> Экономия
+                                            </div>
+                                            <div class="text-[11px] text-eggplant/70 mt-1">Без подписок на конструкторы</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3.5 rounded-2xl bg-eggplant text-cream text-xs flex items-center justify-between">
+                                        <span>Один чистый HTML-файл</span>
+                                        <span class="text-peach font-bold">100% готов к запуску</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="absolute -bottom-5 -left-4 sm:-left-6 bg-cream border border-gold/40 px-4 py-2.5 rounded-2xl shadow-soft z-20 flex items-center gap-2">
+                                <span class="text-gold text-lg">✦</span>
+                                <span class="text-xs font-semibold text-eggplant">Полный контроль над своим сайтом</span>
+                            </div>
+                            <div class="absolute -top-4 -right-3 bg-milk border border-sage/40 px-4 py-2.5 rounded-2xl shadow-soft z-20 flex items-center gap-2">
+                                <span class="text-sage text-base">●</span>
+                                <span class="text-xs font-semibold text-eggplant">Свой домен и хостинг за 0 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about-value" class="py-16 md:py-24 bg-milk/70 border-y border-[#BE985C]/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <span class="text-xs uppercase tracking-widest text-gold font-bold">Для кого этот мастер-класс</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-eggplant">
+                        Кому нужен собственный сайт без посредников
+                    </h2>
+                    <p class="text-eggplant/80 text-base">
+                        Технологии дошли до того уровня, когда вам больше не нужно нанимать программистов или платить каждый месяц конструкторам, чтобы иметь красивое онлайн-представительство.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Карточка 1 -->
+                    <div class="bg-cream p-8 rounded-3xl editorial-border hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-2xl bg-peach/40 flex items-center justify-center text-xl text-eggplant font-serif italic">
+                                01
+                            </div>
+                            <h3 class="font-heading text-xl font-bold text-eggplant">Экспертам и консультантам</h3>
+                            <p class="text-sm text-eggplant/80 leading-relaxed">
+                                Репетиторам, юристам, психологам, коучам и бьюти-мастерам. Стильный сайт сразу презентует ваши услуги, показывает стоимость и заменяет бесконечные разъяснения в личных сообщениях.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-[#BE985C]/20 text-xs font-medium text-eggplant/70">
+                            ✦ Сайт-визитка, прайс-лист, кнопка для быстрой записи
+                        </div>
+                    </div>
+
+                    <!-- Карточка 2 -->
+                    <div class="bg-cream p-8 rounded-3xl editorial-border hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-2xl bg-sage/40 flex items-center justify-center text-xl text-eggplant font-serif italic">
+                                02
+                            </div>
+                            <h3 class="font-heading text-xl font-bold text-eggplant">Создателям авторских товаров и ручной работы</h3>
+                            <p class="text-sm text-eggplant/80 leading-relaxed">
+                                Тем, кто создает керамику, украшения, одежду, свечи или декор. Красивая галерея изделий, фото коллекций и удобная ссылка на покупку прямо в соцсетях или Telegram.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-[#BE985C]/20 text-xs font-medium text-eggplant/70">
+                            ✦ Эстетичная витрина товаров, коллекции, отзывы
+                        </div>
+                    </div>
+
+                    <!-- Карточка 3 -->
+                    <div class="bg-cream p-8 rounded-3xl editorial-border hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-2xl bg-gold/30 flex items-center justify-center text-xl text-eggplant font-serif italic">
+                                03
+                            </div>
+                            <h3 class="font-heading text-xl font-bold text-eggplant">Авторам мастер-классов и встреч</h3>
+                            <p class="text-sm text-eggplant/80 leading-relaxed">
+                                Тем, кто организует свои живые встречи, арт-бранчи, воркшопы или онлайн-вебинары. Простая и стильная страница с описанием события и кнопкой бронирования места.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-[#BE985C]/20 text-xs font-medium text-eggplant/70">
+                            ✦ Страница события, программа встречи, регистрация
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="what-you-can-build" class="py-20 md:py-28">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <span class="text-xs uppercase tracking-widest text-gold font-bold">Форматы сайтов</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-eggplant">
+                        Какой сайт вы сможете создать своими руками
+                    </h2>
+                    <p class="text-eggplant/80 text-base">
+                        Один понятный алгоритм позволяет собрать страницу под любую задачу вашего дела или творчества.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Тип 1 -->
+                    <div class="p-6 rounded-3xl bg-milk editorial-border space-y-3 flex flex-col justify-between hover:shadow-soft transition-all duration-300">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-peach/30 flex items-center justify-center text-2xl">
+                                📇
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-eggplant">Сайт-визитка</h4>
+                            <p class="text-xs text-eggplant/80 leading-relaxed">
+                                Аккуратная страница о вас, вашем опыте, стоимости услуг и прямыми кнопками для связи в Telegram и WhatsApp.
+                            </p>
+                        </div>
+                        <div class="text-[11px] text-gold font-medium pt-3 border-t border-[#BE985C]/20">
+                            Идеально для ссылки в шапке профиля
+                        </div>
+                    </div>
+
+                    <!-- Тип 2 -->
+                    <div class="p-6 rounded-3xl bg-milk editorial-border space-y-3 flex flex-col justify-between hover:shadow-soft transition-all duration-300">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-sage/30 flex items-center justify-center text-2xl">
+                                💼
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-eggplant">Лендинг услуг</h4>
+                            <p class="text-xs text-eggplant/80 leading-relaxed">
+                                Понятная страница с описанием форматов работы, ценами, отзывами клиентов и формой для быстрой записи.
+                            </p>
+                        </div>
+                        <div class="text-[11px] text-gold font-medium pt-3 border-t border-[#BE985C]/20">
+                            Для консультаций и услуг мастеров
+                        </div>
+                    </div>
+
+                    <!-- Тип 3 -->
+                    <div class="p-6 rounded-3xl bg-milk editorial-border space-y-3 flex flex-col justify-between hover:shadow-soft transition-all duration-300">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gold/30 flex items-center justify-center text-2xl">
+                                🎨
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-eggplant">Витрина товаров</h4>
+                            <p class="text-xs text-eggplant/80 leading-relaxed">
+                                Эстетичная галерея изделий ручной работы, карточки коллекций с ценами и кнопками заказа в мессенджерах.
+                            </p>
+                        </div>
+                        <div class="text-[11px] text-gold font-medium pt-3 border-t border-[#BE985C]/20">
+                            Для мастеров и авторов вещей
+                        </div>
+                    </div>
+
+                    <!-- Тип 4 -->
+                    <div class="p-6 rounded-3xl bg-milk editorial-border space-y-3 flex flex-col justify-between hover:shadow-soft transition-all duration-300">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-2xl bg-peach/40 flex items-center justify-center text-2xl">
+                                🎟️
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-eggplant">Страница события</h4>
+                            <p class="text-xs text-eggplant/80 leading-relaxed">
+                                Страница регистрации на мастер-класс, воркшоп или живую встречу с датой, программой и бронью места.
+                            </p>
+                        </div>
+                        <div class="text-[11px] text-gold font-medium pt-3 border-t border-[#BE985C]/20">
+                            Быстрый запуск под анонсы встреч
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="format" class="py-20 md:py-28 bg-milk/70 border-t border-[#BE985C]/20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <span class="text-xs uppercase tracking-widest text-gold font-bold">Как устроен мастер-класс</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-eggplant">
+                        Простой формат без лишней воды
+                    </h2>
+                    <p class="text-eggplant/80 text-base">
+                        Вам не придется смотреть десятки часов теории. Вы смотрите наглядный видеоурок, вставляете один готовый промпт и публикуете свой сайт в тот же вечер.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Шаг 1 -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-cream editorial-border space-y-4 hover:shadow-soft transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-peach/40 flex items-center justify-center text-xl font-serif italic text-eggplant">
+                            🎬
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-eggplant">Практический видеоурок</h3>
+                        <p class="text-sm text-eggplant/80 leading-relaxed">
+                            Наглядная запись экрана от и до: куда зайти, как сформулировать задачу для нейросети, как посмотреть результат и как вносить правки в текст и фото за 2 минуты.
+                        </p>
+                        <div class="text-xs text-eggplant/60 pt-2 border-t border-[#BE985C]/20">
+                            Понятно даже тем, кто никогда не делал сайты
+                        </div>
+                    </div>
+
+                    <!-- Шаг 2 -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-cream editorial-border space-y-4 hover:shadow-soft transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-sage/40 flex items-center justify-center text-xl font-serif italic text-eggplant">
+                            ✍️
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-eggplant">1 готовый мастер-промпт</h3>
+                        <p class="text-sm text-eggplant/80 leading-relaxed">
+                            Никаких запутанных списков из сотен команд. Вы получаете один продуманный универсальный шаблон запроса, куда просто вписываете название своего дела, свои услуги и цены.
+                        </p>
+                        <div class="text-xs text-eggplant/60 pt-2 border-t border-[#BE985C]/20">
+                            Защищен от ошибок и выдает готовый код с 1 раза
+                        </div>
+                    </div>
+
+                    <!-- Шаг 3 -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-cream editorial-border space-y-4 hover:shadow-soft transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-gold/30 flex items-center justify-center text-xl font-serif italic text-eggplant">
+                            📄
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-eggplant">Пошаговая инструкция-памятка</h3>
+                        <p class="text-sm text-eggplant/80 leading-relaxed">
+                            Короткое руководство со скриншотами: как опубликовать готовый сайт бесплатно за 3 минуты, получить рабочую ссылку для шапки профиля и легко обновлять информацию в будущем.
+                        </p>
+                        <div class="text-xs text-eggplant/60 pt-2 border-t border-[#BE985C]/20">
+                            Все ссылки и шпаргалка всегда под рукой
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="curriculum" class="py-20 md:py-28 border-t border-[#BE985C]/20">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                    <span class="text-xs uppercase tracking-widest text-gold font-bold">Программа мастер-класса</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-eggplant">
+                        Что конкретно вы сделаете за 1 вечер
+                    </h2>
+                    <p class="text-eggplant/80 text-base">
+                        Последовательный план без отвлечений: от идеи и первого запроса до готовой ссылки на ваш сайт.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Шаг 1 -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-milk editorial-border flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-soft transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <span class="w-10 h-10 rounded-2xl bg-peach/40 flex items-center justify-center text-eggplant font-heading font-bold text-base shrink-0">
+                                01
+                            </span>
+                            <div>
+                                <h3 class="font-heading text-lg sm:text-xl font-bold text-eggplant">Определяем задачу и собираем каркас страницы</h3>
+                                <p class="text-sm text-eggplant/80 mt-1 leading-relaxed">
+                                    Выбираем тип сайта под ваше дело: визитка, услуги, витрина изделий или событие. Готовим смысловые блоки без лишнего текста.
+                                </p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gold font-semibold whitespace-nowrap self-start md:self-center">Шаг 1 • Смысл</span>
+                    </div>
+
+                    <!-- Шаг 2 -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-milk editorial-border flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-soft transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <span class="w-10 h-10 rounded-2xl bg-sage/40 flex items-center justify-center text-eggplant font-heading font-bold text-base shrink-0">
+                                02
+                            </span>
+                            <div>
+                                <h3 class="font-heading text-lg sm:text-xl font-bold text-eggplant">Запускаем универсальный мастер-промпт</h3>
+                                <p class="text-sm text-eggplant/80 mt-1 leading-relaxed">
+                                    Подставляем ваши названия, услуги и цены в готовый шаблон запроса. Нейросеть генерирует чистый, эстетичный сайт с первого раза.
+                                </p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gold font-semibold whitespace-nowrap self-start md:self-center">Шаг 2 • Генерация</span>
+                    </div>
+
+                    <!-- Шаг 3 -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-milk editorial-border flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-soft transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <span class="w-10 h-10 rounded-2xl bg-gold/30 flex items-center justify-center text-eggplant font-heading font-bold text-base shrink-0">
+                                03
+                            </span>
+                            <div>
+                                <h3 class="font-heading text-lg sm:text-xl font-bold text-eggplant">Публикуем сайт в интернете за 0 ₽</h3>
+                                <p class="text-sm text-eggplant/80 mt-1 leading-relaxed">
+                                    Показываем простой бесплатный сервис, куда достаточно перетащить файл сайта. Получаем рабочую ссылку для соцсетей и мессенджеров.
+                                </p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gold font-semibold whitespace-nowrap self-start md:self-center">Шаг 3 • Запуск</span>
+                    </div>
+
+                    <!-- Шаг 4 -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-milk editorial-border flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-soft transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <span class="w-10 h-10 rounded-2xl bg-eggplant/10 flex items-center justify-center text-eggplant font-heading font-bold text-base shrink-0">
+                                04
+                            </span>
+                            <div>
+                                <h3 class="font-heading text-lg sm:text-xl font-bold text-eggplant">Быстрое редактирование цен и текстов</h3>
+                                <p class="text-sm text-eggplant/80 mt-1 leading-relaxed">
+                                    Разбираем, как за 1–2 минуты поменять любую строчку, стоимость услуг или фотографию в любой момент самостоятельно.
+                                </p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gold font-semibold whitespace-nowrap self-start md:self-center">Шаг 4 • Контроль</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Выделенный блок с бонусом -->
+        <section class="py-16 md:py-20 bg-milk/70 border-t border-[#BE985C]/20">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gradient-to-br from-cream via-milk to-peach/20 rounded-3xl p-8 sm:p-12 editorial-border shadow-soft relative overflow-hidden">
+                    <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-peach/30 rounded-full blur-2xl pointer-events-none"></div>
+
+                    <div class="relative z-10 max-w-2xl space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-peach/40 border border-peach text-eggplant text-xs font-bold uppercase tracking-wider">
+                            <span>✦</span> Бонусный практический урок
+                        </div>
+                        <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-eggplant leading-tight">
+                            Создание своего интерактивного калькулятора
+                        </h2>
+                        <p class="text-sm sm:text-base text-eggplant/85 leading-relaxed">
+                            Специальный модуль для нумерологов, тарологов и специалистов по матрице судьбы. Разбираем, как без единой строчки кода добавить на ваш сайт расчет личного числа или аркана по дате рождения, чтобы вовлекать клиентов в консультации.
+                        </p>
+                        <div class="text-xs font-medium text-eggplant/70 flex items-center gap-2 pt-1">
+                            <span class="text-gold font-bold">✓</span> Входит в стоимость мастер-класса и открывается сразу
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-20 md:py-28 bg-milk/70 border-t border-[#BE985C]/20">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-xl mx-auto mb-12 space-y-3">
+                    <span class="text-xs uppercase tracking-widest text-gold font-bold">Доступ ко всем материалам</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-eggplant">
+                        Стоимость участия
+                    </h2>
+                    <p class="text-eggplant/80 text-sm sm:text-base">
+                        Практический мастер-класс с пошаговым разбором. Доступ ко всем материалам открывается навсегда.
+                    </p>
+                </div>
+
+                <!-- Единый тариф -->
+                <div class="bg-cream rounded-3xl p-8 sm:p-10 border-2 border-gold relative shadow-soft">
+                    <div class="absolute -top-3.5 right-6 sm:right-10 bg-gold text-milk text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
+                        Полный доступ
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-gold">Мастер-класс + Инструкция</span>
+                            <h3 class="font-heading text-2xl sm:text-3xl font-bold text-eggplant mt-1">«Свой сайт за 1 вечер»</h3>
+                            <p class="text-xs sm:text-sm text-eggplant/70 mt-1">Всё необходимое, чтобы создать и опубликовать стильный сайт без программистов.</p>
+                        </div>
+
+                        <div class="flex items-baseline gap-4 pt-2">
+                            <span class="font-heading text-4xl sm:text-5xl font-extrabold text-eggplant">1 990 ₽</span>
+                            <span class="text-base sm:text-lg line-through text-eggplant/50">4 900 ₽</span>
+                        </div>
+
+                        <ul class="space-y-3.5 text-sm sm:text-base text-eggplant/90 border-t border-[#BE985C]/20 pt-6">
+                            <li class="flex items-center gap-3">
+                                <span class="text-gold font-bold">✦</span> Пошаговый видеоурок по созданию сайта с нуля
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-gold font-bold">✦</span> 1 универсальный мастер-промпт с описанием вашей задачи
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-gold font-bold">✦</span> Пошаговая инструкция со скриншотами: куда заходить и что нажимать
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-gold font-bold">✦</span> Инструкция по бесплатной публикации сайта и получению ссылки
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-gold font-bold">✦</span> Памятка по быстрому редактированию текстов и цен в любой момент
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-gold font-bold">✦</span> <strong>Бонусный урок:</strong> создание своего интерактивного калькулятора
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-gold font-bold">✦</span> Бессрочный доступ ко всем материалам
+                            </li>
+                        </ul>
+
+                        <div class="pt-6">
+                            <a href="https://payform.ru/becNvy1/" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center bg-peach hover:bg-peach-hover text-eggplant font-bold text-base py-4 rounded-full shadow-soft hover:shadow-glow transition-all duration-300 transform hover:-translate-y-0.5">
+                                Получить мастер-класс за 1 990 ₽ →
+                            </a>
+                            <p class="text-[11px] text-center text-eggplant/60 mt-3">
+                                Доступ к уроку и материалам открывается сразу после оплаты
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-16 md:py-24 bg-milk/50 border-t border-[#BE985C]/20">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 space-y-2">
+                    <span class="text-xs uppercase tracking-widest text-gold font-bold">Вопросы и ответы</span>
+                    <h2 class="font-heading text-3xl font-extrabold text-eggplant">Часто задаваемые вопросы</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <div class="bg-cream rounded-2xl border border-[#BE985C]/30 overflow-hidden">
+                        <button onclick="toggleAccordion('faq-1')" class="w-full px-6 py-4 text-left flex justify-between items-center font-heading font-semibold text-eggplant hover:text-gold transition-colors">
+                            <span>Нужно ли уметь писать сложные промпты?</span>
+                            <span id="icon-faq-1" class="text-xl transition-transform duration-300">+</span>
+                        </button>
+                        <div id="faq-1" class="hidden px-6 pb-4 text-sm text-eggplant/80 leading-relaxed border-t border-[#BE985C]/10 pt-2">
+                            Нет. Вы получаете один готовый мастер-промпт, где уже настроена вся структура и эстетика. Вам нужно будет только подставить туда свои услуги, описания товаров и цены.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="bg-cream rounded-2xl border border-[#BE985C]/30 overflow-hidden">
+                        <button onclick="toggleAccordion('faq-2')" class="w-full px-6 py-4 text-left flex justify-between items-center font-heading font-semibold text-eggplant hover:text-gold transition-colors">
+                            <span>В каком формате проходит мастер-класс?</span>
+                            <span id="icon-faq-2" class="text-xl transition-transform duration-300">+</span>
+                        </button>
+                        <div id="faq-2" class="hidden px-6 pb-4 text-sm text-eggplant/80 leading-relaxed border-t border-[#BE985C]/10 pt-2">
+                            Это емкий пошаговый видеоурок с демонстрацией экрана, текстовая шпаргалка со скриншотами (куда нажимать, как публиковать и редактировать) и отдельный бонусный урок по калькуляторам.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="bg-cream rounded-2xl border border-[#BE985C]/30 overflow-hidden">
+                        <button onclick="toggleAccordion('faq-3')" class="w-full px-6 py-4 text-left flex justify-between items-center font-heading font-semibold text-eggplant hover:text-gold transition-colors">
+                            <span>Смогу ли я поменять цены или фото позже?</span>
+                            <span id="icon-faq-3" class="text-xl transition-transform duration-300">+</span>
+                        </button>
+                        <div id="faq-3" class="hidden px-6 pb-4 text-sm text-eggplant/80 leading-relaxed border-t border-[#BE985C]/10 pt-2">
+                            Да. В инструкции подробно показано, как за 1–2 минуты поменять любую букву, цену, фотографию или ссылку без помощи сторонних специалистов.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="bg-cream rounded-2xl border border-[#BE985C]/30 overflow-hidden">
+                        <button onclick="toggleAccordion('faq-4')" class="w-full px-6 py-4 text-left flex justify-between items-center font-heading font-semibold text-eggplant hover:text-gold transition-colors">
+                            <span>Придется ли платить за хостинг или конструкторы?</span>
+                            <span id="icon-faq-4" class="text-xl transition-transform duration-300">+</span>
+                        </button>
+                        <div id="faq-4" class="hidden px-6 pb-4 text-sm text-eggplant/80 leading-relaxed border-t border-[#BE985C]/10 pt-2">
+                            Нет. Мы показываем бесплатный способ размещения сайта в сети. У вас будет постоянная рабочая ссылка для Telegram и соцсетей без ежемесячной абонентской платы.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-eggplant text-cream py-12 border-t border-gold/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <span class="font-heading font-bold text-xl tracking-tight text-cream">
+                        НЕЙРОСАЙТ <span class="text-peach">•</span> Мастер-класс
+                    </span>
+                    <p class="text-xs text-cream/60 mt-1">Создание авторских сайтов и виджетов с помощью нейросетей.</p>
+                </div>
+                <div class="flex flex-wrap gap-6 text-xs text-cream/70">
+                    <a href="https://varlamova-matrix.tb.ru/" target="_blank" rel="noopener noreferrer" class="hover:text-peach transition-colors">Договор оферты</a>
+                    <a href="https://taplink.cc/varlamovamatrix" target="_blank" rel="noopener noreferrer" class="hover:text-peach transition-colors">Политика конфиденциальности</a>
+                    <a href="https://t.me/ovaplamova" target="_blank" rel="noopener noreferrer" class="hover:text-peach transition-colors">Служба заботы в Telegram</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-cream/10 text-center text-xs text-cream/40">
+                © 2026 Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAccordion(id) {
+            const item = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            const isHidden = item.classList.contains('hidden');
+
+            document.querySelectorAll('[id^="faq-"]').forEach(el => {
+                if (el.id !== id) {
+                    el.classList.add('hidden');
+                    const ic = document.getElementById('icon-' + el.id);
+                    if (ic) ic.innerText = '+';
+                }
+            });
+
+            if (isHidden) {
+                item.classList.remove('hidden');
+                icon.innerText = '−';
+            } else {
+                item.classList.add('hidden');
+                icon.innerText = '+';
+            }
+        }
+
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', toggleMobileMenu);
+        }
+    </script>
+</body>
+</html>
